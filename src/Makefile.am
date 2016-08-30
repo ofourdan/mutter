@@ -82,6 +82,8 @@ mutter_built_sources += \
 	linux-dmabuf-unstable-v1-server-protocol.h				\
 	keyboard-shortcuts-inhibit-unstable-v1-protocol.c		\
 	keyboard-shortcuts-inhibit-unstable-v1-server-protocol.h	\
+	xwayland-keyboard-grab-unstable-v1-protocol.c			\
+	xwayland-keyboard-grab-unstable-v1-server-protocol.h		\
 	$(NULL)
 endif
 
@@ -447,6 +449,8 @@ libmutter_@LIBMUTTER_API_VERSION@_la_SOURCES +=	\
 	wayland/meta-wayland-inhibit-shortcuts.h \
 	wayland/meta-wayland-inhibit-shortcuts-dialog.c	\
 	wayland/meta-wayland-inhibit-shortcuts-dialog.h	\
+	wayland/meta-xwayland-grab-keyboard.c  	\
+	wayland/meta-xwayland-grab-keyboard.h  	\
 	$(NULL)
 endif
 
@@ -743,4 +747,8 @@ endef
 keyboard-shortcuts-inhibit-unstable-v1-protocol.c : $(WAYLAND_PROTOCOLS_DATADIR)/unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml
 	$(AM_V_GEN)$(WAYLAND_SCANNER) code < $< > $@
 keyboard-shortcuts-inhibit-unstable-v1-server-protocol.h : $(WAYLAND_PROTOCOLS_DATADIR)/unstable/keyboard-shortcuts-inhibit/keyboard-shortcuts-inhibit-unstable-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) server-header < $< > $@
+xwayland-keyboard-grab-unstable-v1-protocol.c : $(WAYLAND_PROTOCOLS_DATADIR)/unstable/xwayland-keyboard-grab/xwayland-keyboard-grab-unstable-v1.xml
+	$(AM_V_GEN)$(WAYLAND_SCANNER) code < $< > $@
+xwayland-keyboard-grab-unstable-v1-server-protocol.h : $(WAYLAND_PROTOCOLS_DATADIR)/unstable/xwayland-keyboard-grab/xwayland-keyboard-grab-unstable-v1.xml
 	$(AM_V_GEN)$(WAYLAND_SCANNER) server-header < $< > $@
