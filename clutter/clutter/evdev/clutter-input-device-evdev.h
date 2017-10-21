@@ -79,6 +79,17 @@ struct _ClutterInputDeviceEvdev
   xkb_mod_mask_t stickykeys_depressed_mask;
   xkb_mod_mask_t stickykeys_latched_mask;
   xkb_mod_mask_t stickykeys_locked_mask;
+  gint mousekeys_btn;
+  gboolean mousekeys_btn_states[3];
+  guint32 mousekeys_first_motion_time; /* ms */
+  guint32 mousekeys_last_motion_time; /* ms */
+  guint mousekeys_init_delay;
+  guint mousekeys_accel_time;
+  guint mousekeys_max_speed;
+  gdouble mousekeys_curve_factor;
+  guint move_mousekeys_timer;
+  guint16 last_mousekeys_key;
+  ClutterVirtualInputDevice *mousekeys_virtual_device;
 };
 
 GType                     _clutter_input_device_evdev_get_type        (void) G_GNUC_CONST;
