@@ -265,6 +265,8 @@ libmutter_@LIBMUTTER_API_VERSION@_la_SOURCES =	\
 	core/meta-inhibit-shortcuts-dialog-default-private.h \
 	core/meta-kbd-a11y-dialog.c		\
 	meta/meta-kbd-a11y-dialog.h		\
+	core/meta-kbd-a11y-dialog-default.c	\
+	core/meta-kbd-a11y-dialog-default-private.h	\
 	core/delete.c				\
 	core/display.c				\
 	core/display-private.h			\
