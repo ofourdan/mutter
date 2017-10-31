@@ -34,6 +34,20 @@ G_DEFINE_INTERFACE (MetaKbdA11yDialog, meta_kbd_a11y_dialog, G_TYPE_OBJECT)
 static void
 meta_kbd_a11y_dialog_default_init (MetaKbdA11yDialogInterface *iface)
 {
+  g_object_interface_install_property (iface,
+                                       g_param_spec_enum ("type",
+                                                          "Setting Type",
+                                                          "Keyboard accessibility setting",
+                                                           META_TYPE_KBD_A11Y_DIALOG_TYPE,
+                                                           META_KBD_A11Y_SLOW_KEYS,
+                                                           G_PARAM_READWRITE));
+  g_object_interface_install_property (iface,
+                                       g_param_spec_boolean ("enabled",
+                                                             "Setting enabled",
+                                                             "Setting enabled",
+                                                             TRUE,
+                                                             G_PARAM_READWRITE));
+
   kbd_a11y_dialog_signals[RESPONSE] =
     g_signal_new ("response",
                   G_TYPE_FROM_INTERFACE (iface),

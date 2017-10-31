@@ -7,6 +7,7 @@
 
 #include <meta/compositor.h>
 #include <meta/display.h>
+#include <meta/meta-kbd-a11y-dialog.h>
 #include "meta-plugin-manager.h"
 #include "meta-window-actor-private.h"
 #include <clutter/clutter.h>
@@ -69,5 +70,9 @@ MetaCloseDialog * meta_compositor_create_close_dialog (MetaCompositor *composito
 
 MetaInhibitShortcutsDialog * meta_compositor_create_inhibit_shortcuts_dialog (MetaCompositor *compositor,
                                                                               MetaWindow     *window);
+
+MetaKbdA11yDialog * meta_compositor_create_kbd_a11y_dialog (MetaCompositor       *compositor,
+                                                            MetaKbdA11yDialogType type,
+                                                            gboolean              enabled);
 
 #endif /* META_COMPOSITOR_PRIVATE_H */

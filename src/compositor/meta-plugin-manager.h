@@ -98,4 +98,8 @@ MetaInhibitShortcutsDialog *
   meta_plugin_manager_create_inhibit_shortcuts_dialog (MetaPluginManager *plugin_mgr,
                                                        MetaWindow        *window);
 
+MetaKbdA11yDialog * meta_plugin_manager_create_kbd_a11y_dialog (MetaPluginManager    *plugin_mgr,
+                                                                MetaKbdA11yDialogType type,
+                                                                gboolean              enabled);
+
 #endif

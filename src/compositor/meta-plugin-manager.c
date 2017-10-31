@@ -29,6 +29,7 @@
 #include "window-private.h"
 #include "meta-close-dialog-default-private.h"
 #include "meta-inhibit-shortcuts-dialog-default-private.h"
+#include "meta-kbd-a11y-default-private.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -403,4 +404,18 @@ meta_plugin_manager_create_inhibit_shortcuts_dialog (MetaPluginManager *plugin_m
     return klass->create_inhibit_shortcuts_dialog (plugin, window);
 
   return meta_inhibit_shortcuts_dialog_default_new (window);
+}
+
+MetaKbdA11yDialog *
+meta_plugin_manager_create_kbd_a11y_dialog (MetaPluginManager    *plugin_mgr,
+                                            MetaKbdA11yDialogType type,
+                                            gboolean              enabled)
+{
+  MetaPlugin *plugin = plugin_mgr->plugin;
+  MetaPluginClass *klass = META_PLUGIN_GET_CLASS (plugin);
+
+  if (klass->create_kbd_a11y_dialog)
+    return klass->create_kbd_a11y_dialog (plugin, type, enabled);
+
+  return meta_kbd_a11y_dialog_default_new (type, enabled);
 }

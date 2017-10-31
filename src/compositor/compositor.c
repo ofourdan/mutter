@@ -1468,3 +1468,13 @@ meta_compositor_create_inhibit_shortcuts_dialog (MetaCompositor *compositor,
   return meta_plugin_manager_create_inhibit_shortcuts_dialog (compositor->plugin_mgr,
                                                               window);
 }
+
+MetaKbdA11yDialog *
+meta_compositor_create_kbd_a11y_dialog (MetaCompositor       *compositor,
+                                        MetaKbdA11yDialogType type,
+                                        gboolean              enabled)
+{
+  return meta_plugin_manager_create_kbd_a11y_dialog (compositor->plugin_mgr,
+                                                     type,
+                                                     enabled);
+}

@@ -20,6 +20,7 @@
 #define META_KBD_A11Y_DIALOG_H
 
 #include <glib-object.h>
+#include <gio/gio.h>
 
 #define META_TYPE_KBD_A11Y_DIALOG (meta_kbd_a11y_dialog_get_type ())
 G_DECLARE_INTERFACE (MetaKbdA11yDialog, meta_kbd_a11y_dialog,
@@ -30,6 +31,12 @@ typedef enum
   META_KBD_A11Y_DIALOG_RESPONSE_ON,
   META_KBD_A11Y_DIALOG_RESPONSE_OFF,
 } MetaKbdA11yDialogResponse;
+
+typedef enum
+{
+  META_KBD_A11Y_STICKY_KEYS,
+  META_KBD_A11Y_SLOW_KEYS,
+} MetaKbdA11yDialogType;
 
 struct _MetaKbdA11yDialogInterface
 {

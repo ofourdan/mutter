@@ -28,6 +28,7 @@
 #include <meta/meta-version.h>
 #include <meta/meta-close-dialog.h>
 #include <meta/meta-inhibit-shortcuts-dialog.h>
+#include <meta/meta-kbd-a11y-dialog.h>
 
 #include <clutter/clutter.h>
 #include <X11/extensions/Xfixes.h>
@@ -251,6 +252,18 @@ struct _MetaPluginClass
    */
   MetaInhibitShortcutsDialog * (* create_inhibit_shortcuts_dialog) (MetaPlugin *plugin,
                                                                     MetaWindow *window);
+
+  /**
+   * MetaPluginClass::create_kbd_a11y_dialog:
+   * @type: a #MetaKbdA11yDialogType
+   * @enabled: the accessbility feature is enabled
+   *
+   * Virtual function called to create a keyboard accessibility dialog
+   * when enabling "sticky keys" or "slow keys" from the keyboard.
+   */
+  MetaKbdA11yDialog * (* create_kbd_a11y_dialog) (MetaPlugin           *plugin,
+                                                  MetaKbdA11yDialogType type,
+                                                  gboolean              enabled);
 };
 
 /**
