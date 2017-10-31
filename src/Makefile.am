@@ -263,6 +263,8 @@ libmutter_@LIBMUTTER_API_VERSION@_la_SOURCES =	\
 	meta/meta-inhibit-shortcuts-dialog.h	\
 	core/meta-inhibit-shortcuts-dialog-default.c	\
 	core/meta-inhibit-shortcuts-dialog-default-private.h \
+	core/meta-kbd-a11y-dialog.c		\
+	meta/meta-kbd-a11y-dialog.h		\
 	core/delete.c				\
 	core/display.c				\
 	core/display-private.h			\
@@ -515,6 +517,7 @@ libmutterinclude_headers =			\
 	meta/meta-background-group.h		\
 	meta/meta-close-dialog.h		\
 	meta/meta-inhibit-shortcuts-dialog.h	\
+	meta/meta-kbd-a11y-dialog.h		\
 	meta/meta-cursor-tracker.h		\
 	meta/meta-dnd.h			\
 	meta/meta-idle-monitor.h		\
