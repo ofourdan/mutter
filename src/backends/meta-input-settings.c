@@ -33,6 +33,8 @@
 #include "meta-input-settings-private.h"
 #include "backends/meta-logical-monitor.h"
 #include "backends/meta-monitor.h"
+#include "meta-plugin-manager.h"
+#include "compositor/compositor-private.h"
 
 #include <glib/gi18n-lib.h>
 #include <meta/util.h>
@@ -1201,6 +1203,61 @@ load_keyboard_a11y_settings (MetaInputSettings  *input_settings,
 }
 
 static void
+kbd_a11y_dialog_response_cb (MetaKbdA11yDialog        *dialog,
+                             MetaKbdA11yDialogResponse response,
+                             MetaInputSettings        *input_settings)
+{
+  MetaInputSettingsPrivate *priv = meta_input_settings_get_instance_private (input_settings);
+  const gchar *key;
+  MetaKbdA11yDialogType type;
+  gboolean value;
+
+  g_object_get (dialog, "type", &type, NULL);
+  key = (type == META_KBD_A11Y_SLOW_KEYS) ? "slowkeys-enable" : "stickykeys-enable";
+  value = (response == META_KBD_A11Y_DIALOG_RESPONSE_ON) ? TRUE : FALSE;
+
+  g_settings_set_boolean (priv->a11y_settings, key, value);
+}
+
+static void
+maybe_show_kbd_a11y_dialog (ClutterKeyboardA11yFlags new_flags,
+                            ClutterKeyboardA11yFlags what_changed,
+                            MetaInputSettings       *input_settings)
+{
+  MetaKbdA11yDialog *dialog;
+  MetaDisplay *meta_display;
+  MetaKbdA11yDialogType type;
+  gboolean enabled;
+
+  meta_display = meta_get_display ();
+  if (!meta_display)
+    return;
+
+  if (what_changed & CLUTTER_A11Y_SLOW_KEYS_ENABLED)
+    {
+      type = META_KBD_A11Y_SLOW_KEYS;
+      enabled = (new_flags & CLUTTER_A11Y_SLOW_KEYS_ENABLED) ? TRUE : FALSE;
+    }
+  else if (what_changed & CLUTTER_A11Y_STICKY_KEYS_ENABLED)
+    {
+      type = META_KBD_A11Y_STICKY_KEYS;
+      enabled = (new_flags & CLUTTER_A11Y_STICKY_KEYS_ENABLED) ? TRUE : FALSE;
+    }
+  else
+    return; /* Not interested */
+
+  dialog =
+    meta_compositor_create_kbd_a11y_dialog (meta_display->compositor,
+                                            type, enabled);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (kbd_a11y_dialog_response_cb),
+                    input_settings);
+
+  meta_kbd_a11y_dialog_show (dialog);
+}
+
+static void
 on_keyboard_a11y_settings_changed (ClutterDeviceManager    *device_manager,
                                    ClutterKeyboardA11yFlags new_flags,
                                    ClutterKeyboardA11yFlags what_changed,
@@ -1216,6 +1273,8 @@ on_keyboard_a11y_settings_changed (ClutterDeviceManager    *device_manager,
                                 settings_flags_pair[i].name,
                                 (new_flags & settings_flags_pair[i].flag) ? TRUE : FALSE);
     }
+
+  maybe_show_kbd_a11y_dialog (new_flags, what_changed, input_settings);
 }
 
 static void
